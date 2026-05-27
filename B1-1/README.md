@@ -13,7 +13,7 @@
 ---
 ```bash
 # 과제 진행을 위한 패키지 설치 커맨드
-$ sudo apt update && sudo apt install -y vim openssh-server iproute2 sudo ufw acl
+$ sudo apt update && sudo apt install -y vim openssh-server iproute2 sudo ufw acl bc
 
 # ssh 서버 설치
 $ sudo apt install -y openssh-server
@@ -29,6 +29,9 @@ $ sudo apt install ufw
 
 # acl 권한
 $ sudo apt install acl
+
+# 소수점 계산을 위한 패키지
+$ sudo apt install bc
 ```
 ---
 
@@ -179,5 +182,14 @@ Agent READY
 2026-05-27 19:59:05,023 [INFO] [SafetyGuard] Process priority lowered (nice=10).
 2026-05-27 19:59:05,023 [INFO] Agent listening at port 15034
 ```
-### 4. 시스템 관제 자동화 스크립트 구현
+### 4. 시스템 관제 자동화 스크립트(monitor.sh) 구현
+**파일 위치/권한 정책**
+```bash
+# monitor.sh 파일 생성 및 권한 설정
+$ sudo chown agent-dev:agent-core /home/agent-admin/agent-app/bin/monitor.sh
+$ sudo chmod 750 /home/agent-admin/agent-app/bin/monitor.sh
+
+# 권한 확인
+-rwxr-x--- 1 agent-dev agent-core 0 May 27 20:27 /home/agent-admin/agent-app/bin/monitor.sh
+```
 ### 5. 자동 실행 설정
