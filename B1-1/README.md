@@ -5,7 +5,7 @@
 - [x] 방화벽(UFW 또는 firewalld) 활성화 및 20022/tcp, 15034/tcp만 허용 내역
 - [x] 계정/그룹(agent-admin/dev/test, agent-common/core) 생성 확인 내역
 - [x] 디렉토리 구조 및 권한(ACL 포함) 확인 내역
-- [ ] 앱 Boot Sequence 5단계 [OK] 및 "Agent READY" 확인 내역
+- [x] 앱 Boot Sequence 5단계 [OK] 및 "Agent READY" 확인 내역
 - [ ] monitor.sh 실행 결과(프로세스/포트/리소스/경고) 내역
 - [ ] /var/log/agent-app/monitor.log 누적 기록 확인(최근 라인) 내역
 - [ ] crontab 매분 실행 등록 및 자동 실행 확인(1분 후 로그 증가) 내역
@@ -142,5 +142,42 @@ drwxrws---  1 agent-admin   agent-core   0 May 27 17:03 /home/agent-admin/agent-
 drwxrws---  1 agent-admin   agent-common 0 May 27 17:06 /home/agent-admin/agent-app/upload_files
 ```
 ### 3. 애플리케이션 실행 환경 구성
+**환경 변수 설정**
+```bash
+export AGENT_HOME=/home/agent-admin/agent-app
+export AGENT_PORT=15034
+export AGENT_UPLOAD_DIR=$AGENT_HOME/upload_files
+export AGENT_KEY_PATH=$AGENT_HOME/api_keys/
+export AGENT_LOG_DIR=/var/log/agent-app
+
+# 환경 변수 적용하기 
+$ source ~/.profile
+```
+
+**키 파일 생성**
+```bash
+echo "agent_api_key_test" | sudo tee /home/agent-admin/agent-app/api_keys/secret.key
+```
+
+**앱 실행**
+```bash
+$ ./app
+>>> Starting Agent Boot Sequence...
+[1/5] Checking User Account               [OK]
+   ... Running as service user 'agent-admin' (uid=1002)
+[2/5] Verifying Environment Variables     [OK]
+   ... All required Envs correct
+[3/5] Checking Required Files             [OK]
+   ... Verified 'secret.key' with correct key string.
+[4/5] Checking Port Availability          [OK]
+   ... Port 15034 is available.
+[5/5] Verifying Log Permission            [OK]
+   ... Log directory is writable: /var/log/agent-app
+------------------------------------------------------------
+All Boot Checks Passed!
+Agent READY
+2026-05-27 19:59:05,023 [INFO] [SafetyGuard] Process priority lowered (nice=10).
+2026-05-27 19:59:05,023 [INFO] Agent listening at port 15034
+```
 ### 4. 시스템 관제 자동화 스크립트 구현
 ### 5. 자동 실행 설정
