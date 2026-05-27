@@ -191,5 +191,28 @@ $ sudo chmod 750 /home/agent-admin/agent-app/bin/monitor.sh
 
 # 권한 확인
 -rwxr-x--- 1 agent-dev agent-core 0 May 27 20:27 /home/agent-admin/agent-app/bin/monitor.sh
+
+# 더미 파일 생성
+$ sudo fallocate -l 11M /var/log/agent-app/monitor.log
 ```
 ### 5. 자동 실행 설정
+```bash
+# cron 실행
+$ sudo systemctl start cron
+# cron 상태 확인
+$ systemctl is-active cron
+# crontabl 편집기 열기
+$ crontab -e
+# 아래 커맨드 추가
+# 매분 실행할 명령어와 출력 처리 방법 정의
+$ * * * * * /home/agent-admin/agent-app/bin/monitor.sh >> /var/log/agent-app/monitor_cron.out 2>&1
+# 편집 내용 확인
+$ crontab -l
+
+# 로그 값 확인
+[2026-05-28 00:06:01] PID:384 385 CPU:1.7% MEM:5.3% DISK_USED:1%
+[2026-05-28 00:07:01] PID:384 385 CPU:0% MEM:5.3% DISK_USED:1%
+[2026-05-28 00:08:01] PID:384 385 CPU:6.5% MEM:5.3% DISK_USED:1%
+[2026-05-28 00:09:01] PID:384 385 CPU:0% MEM:5.3% DISK_USED:1%
+[2026-05-28 00:10:01] PID:384 385 CPU:1.7% MEM:5.3% DISK_USED:1%
+```
