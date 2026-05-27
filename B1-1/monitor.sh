@@ -1,5 +1,6 @@
 #!/bin/bash
 
+umask 002
 # ==============================================================================
 # 시스템 관제 자동화 스크립트 (monitor.sh)
 # ==============================================================================
@@ -16,21 +17,61 @@ APP_PATH="$APP_HOME/$APP_NAME"
 CPU_THRESHOLD=20
 MEM_THRESHOLD=10
 DISK_THRESHOLD=80
+MAX_LOG_SIZE_MB=10
+MAX_BACKUPS=10
 
 # --- 함수 정의 ---
 
 # 로그 기록 함수
-log_message() {
-    # 로그 디렉토리가 없으면 생성
-    if [ ! -d "$LOG_DIR" ]; then
-        mkdir -p "$LOG_DIR"
-        # agent-admin 계정이 쓸 수 있도록 권한 부여 (필요 시)
-        # chown agent-admin:agent-core "$LOG_DIR"
+manage_log() {
+    # 10mb 계산
+    local max_size_bytes=$((MAX_LOG_SIZE_MB * 1024 * 1024))
+    # 현재 로그 파일의 크기 확인
+    local current_size_bytes=$(stat -c %s "$LOG_FILE")
+
+    if (( current_size_bytes < max_size_bytes )); then
+        return
     fi
+
+    # 1. 현재 백업 파일들의 목록을 가져와 개수를 센다.
+    # 'grep -v'를 이용해 목록에서 현재 로그 파일(monitor.log)은 제외한다.
+    local backup_files_list
+    backup_files_list=$(ls -1 "${LOG_DIR}"/monitor-*.log 2>/dev/null | grep -v "${LOG_FILE}$")
     
-    local current_time
-    current_time=$(date '+%Y-%m-%d %H:%M:%S')
-    echo "[$current_time] $1" >> "$LOG_FILE"
+    local backup_count
+    # backup_files_list가 비어있지 않을 때만 wc -l 실행
+    if [ -n "$backup_files_list" ]; then
+        backup_count=$(echo "$backup_files_list" | wc -l)
+    else
+        backup_count=0
+    fi
+
+    # 2. 백업 파일 개수가 최대치에 도달했거나 넘었으면, 가장 오래된 파일을 삭제한다.
+    while (( backup_count >= MAX_BACKUPS )); do
+        # 3. 가장 오래된 파일 찾기: 목록을 정렬(sort)했을 때 첫 번째 줄(head -n 1)에 오는 파일
+        local oldest_backup
+        oldest_backup=$(echo "$backup_files_list" | sort | head -n 1)
+        
+        if [ -n "$oldest_backup" ]; then
+            echo "Max backups (${MAX_BACKUPS}) reached. Deleting oldest: ${oldest_backup}"
+            rm -f "$oldest_backup"
+        fi
+        
+        # 삭제 후 목록과 개수를 다시 계산하여 루프 조건을 확인
+        backup_files_list=$(ls -1 "${LOG_DIR}"/monitor-*.log 2>/dev/null | grep -v "${LOG_FILE}$")
+        if [ -n "$backup_files_list" ]; then
+            backup_count=$(echo "$backup_files_list" | wc -l)
+        else
+            backup_count=0
+        fi
+    done
+
+    # 4. 현재 로그 파일을 백업
+    local backup_file="${LOG_DIR}/monitor-$(date +'%Y-%m-%d-%H-%M-%S').log"
+    echo "Log size exceeds ${MAX_LOG_SIZE_MB}MB. Rotating log to ${backup_file}"
+    
+    mv "$LOG_FILE" "$backup_file"
+    touch "$LOG_FILE"
 }
 
 # --- 스크립트 시작 ---
@@ -109,11 +150,9 @@ if [ "$disk_usage_int" -gt "$DISK_THRESHOLD" ]; then
     echo "[WARNING]MEM threshold exceeded (${disk_usage}% > ${DISK_THRESHOLD}%)"
 fi
 
-
 # --- 5. 로그 기록 ---
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
-echo "$TIMESTAMP"
 LOG_MSG="[${TIMESTAMP}] PID:${process_pid} CPU:${cpu_usage}% MEM:${mem_usage}% DISK_USED:${disk_usage}%"
 echo "$LOG_MSG" >> "$LOG_FILE"
 
-# --- 6. 로그 파일 용량 관리 ---
+manage_log
