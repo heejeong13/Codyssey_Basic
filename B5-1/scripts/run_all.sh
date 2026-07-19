@@ -26,6 +26,15 @@ echo "[2/5] 핵심 조회 및 UPDATE/DELETE 실습을 실행합니다."
   -f "$PROJECT_ROOT/sql/03_queries.sql"
 
 echo "[3/5] 보너스 조회를 실행합니다."
+# 04_bonus.sql PART 2의 FK INSERT는 무결성 제약조건이 막아야 하는 의도된 오류다.
+# psql의 표준 오류만 별도 파일에 덮어써 오류 원인을 결과 자료로 남긴다.
+{
+  echo "공식 보너스 2. 의도적인 FK 오류 실행 결과"
+  echo "존재하지 않는 player_id 999999를 참조하므로 PostgreSQL이 INSERT를 거부해야 합니다."
+  echo "해결하려면 존재하는 player.id를 사용하거나 player 부모 행을 먼저 입력해야 합니다."
+  echo
+} > "$PROJECT_ROOT/results/bonus_02_fk_error.txt"
+
 "$POSTGRES_BIN/psql" \
   -X \
   -v ON_ERROR_STOP=1 \
@@ -34,7 +43,8 @@ echo "[3/5] 보너스 조회를 실행합니다."
   -p "$PGPORT" \
   -U "$PGUSER" \
   -d "$PGDATABASE" \
-  -f "$PROJECT_ROOT/sql/04_bonus.sql"
+  < "$PROJECT_ROOT/sql/04_bonus.sql" \
+  2>> "$PROJECT_ROOT/results/bonus_02_fk_error.txt"
 
 echo "[4/5] PostgreSQL 환경 요약 로그를 생성합니다."
 "$PROJECT_ROOT/scripts/export_logs.sh"

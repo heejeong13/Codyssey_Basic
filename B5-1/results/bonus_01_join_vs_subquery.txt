@@ -1,0 +1,20 @@
+       name        
+-------------------
+ BNK FearX
+ DN SOOPers
+ Hanjin BRION
+ KT Rolster
+ Kiwoom DRX
+ Nongshim RedForce
+(6 rows)
+
+       name        
+-------------------
+ BNK FearX
+ DN SOOPers
+ Hanjin BRION
+ KT Rolster
+ Kiwoom DRX
+ Nongshim RedForce
+(6 rows)
+

@@ -1,0 +1,5 @@
+ invalid_history_count 
+-----------------------
+                     0
+(1 row)
+

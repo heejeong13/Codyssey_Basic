@@ -1,7 +1,0 @@
-        name         | championship_count 
----------------------+--------------------
- Gen.G               |                  6
- Dplus KIA           |                  3
- Hanwha Life Esports |                  2
-(3 rows)
-

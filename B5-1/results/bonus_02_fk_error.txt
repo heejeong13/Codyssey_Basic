@@ -1,0 +1,6 @@
+공식 보너스 2. 의도적인 FK 오류 실행 결과
+존재하지 않는 player_id 999999를 참조하므로 PostgreSQL이 INSERT를 거부해야 합니다.
+해결하려면 존재하는 player.id를 사용하거나 player 부모 행을 먼저 입력해야 합니다.
+
+ERROR:  insert or update on table "player_team_history" violates foreign key constraint "history_player_fk"
+DETAIL:  Key (player_id)=(999999) is not present in table "player".

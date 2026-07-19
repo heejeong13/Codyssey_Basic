@@ -1,0 +1,47 @@
+        name         | championship_count 
+---------------------+--------------------
+ Gen.G               |                  6
+ Dplus KIA           |                  3
+ Hanwha Life Esports |                  2
+(3 rows)
+
+ summoner_name |    real_name    | championship_count 
+---------------+-----------------+--------------------
+ Canyon        | Kim Geon-bu     |                  6
+ Chovy         | Jeong Ji-hoon   |                  6
+ Peanut        | Han Wang-ho     |                  5
+ Delight       | Yoo Hwan-joong  |                  4
+ Doran         | Choi Hyeon-joon |                  4
+(5 rows)
+
+ summoner_name |    real_name     | team_count 
+---------------+------------------+------------
+ Doran         | Choi Hyeon-joon  |          4
+ Deft          | Kim Hyuk-kyu     |          3
+ Lehends       | Son Si-woo       |          3
+ Life          | Kim Jeong-min    |          3
+ Aiming        | Kim Ha-ram       |          2
+ Bdd           | Gwak Bo-seong    |          2
+ BeryL         | Cho Geon-hee     |          2
+ Burdol        | Noh Tae-yoon     |          2
+ Canna         | Kim Chang-dong   |          2
+ Canyon        | Kim Geon-bu      |          2
+ Chovy         | Jeong Ji-hoon    |          2
+ Clid          | Kim Tae-min      |          2
+ CuVee         | Lee Seong-jin    |          2
+ Cuzz          | Moon Woo-chan    |          2
+ Delight       | Yoo Hwan-joong   |          2
+ Gumayusi      | Lee Min-hyeong   |          2
+ Karis         | Kim Hong-jo      |          2
+ Kellin        | Kim Hyeong-gyu   |          2
+ Kiin          | Kim Gi-in        |          2
+ Kingen        | Hwang Seong-hoon |          2
+ Malrang       | Kim Geun-seong   |          2
+ Peanut        | Han Wang-ho      |          2
+ Peyz          | Kim Su-hwan      |          2
+ Rascal        | Kim Kwang-hee    |          2
+ Smash         | Shin Geum-jae    |          2
+ Zeus          | Choi Woo-je      |          2
+ deokdam       | Seo Dae-gil      |          2
+(27 rows)
+

@@ -1,9 +1,0 @@
-        name         | player_count 
----------------------+--------------
- Dplus KIA           |            5
- Gen.G               |            5
- Hanwha Life Esports |            5
- KT Rolster          |            5
- T1                  |            5
-(5 rows)
-

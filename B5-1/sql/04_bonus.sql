@@ -1,38 +1,91 @@
--- 이 파일은 여러 테이블의 관계를 조금 더 폭넓게 탐색하는 8개 보너스 쿼리다.
--- 모든 조회는 데이터 변경 없이 results의 해당 파일을 덮어쓴다.
+-- 이 파일은 과제에서 지정한 공식 보너스 3개만 실행한다.
+-- 각 PART의 목적, 실행 방법, 결과 해석을 초보자가 이해할 수 있도록 주석으로 설명한다.
 
 \pset expanded off
 \pset null '(없음)'
 
--- 1. GROUP BY가 같은 포지션의 선수를 묶고 COUNT가 서로 다른 선수 행을 센다.
-\o :results_dir/bonus_01_player_count_by_position.txt
-\echo '보너스 1. 포지션별 선수 수'
-SELECT position, COUNT(*) AS player_count
-FROM player
-GROUP BY position
-ORDER BY player_count DESC, position;
+-- ============================================================================
+-- PART 1. 같은 요구사항을 JOIN과 서브쿼리 두 방식으로 풀기
+-- ============================================================================
+-- 요구사항: 대상 10개 팀 중 LCK 우승 이력이 없는 팀을 찾는다.
+--
+-- LEFT JOIN 방식:
+-- team의 모든 행을 남긴 채 championship을 연결한 후, 연결되지 않은 NULL 행을 찾는다.
+-- 연결 결과의 다른 컬럼도 함께 조회해야 할 때 확장하기 쉬운 방식이다.
+--
+-- NOT EXISTS 서브쿼리 방식:
+-- 각 team 행마다 championship 행이 존재하는지만 확인하고, 존재하지 않을 때 반환한다.
+-- 단순히 관련 행의 존재 여부만 묻는 요구에는 의도가 더 직접적으로 드러난다.
+--
+-- 두 쿼리는 작성 방법만 다르고 같은 팀 목록을 반환해야 한다.
+\o :results_dir/bonus_01_join_vs_subquery.txt
+\echo '공식 보너스 1. 우승 이력이 없는 팀을 JOIN과 서브쿼리로 비교'
+\echo '[LEFT JOIN 방식]'
+SELECT team.name
+FROM team
+LEFT JOIN championship ON championship.winner_team_id = team.id
+WHERE championship.id IS NULL
+ORDER BY team.name;
 
--- 2. tournament, championship, team을 INNER JOIN해 우승이 확정된 연도만 조회한다.
-\o :results_dir/bonus_02_winners_by_year.txt
-\echo '보너스 2. 연도별 우승팀'
-SELECT tournament.season_year, tournament.name, team.name AS winner
-FROM championship
-INNER JOIN tournament ON tournament.id = championship.tournament_id
-INNER JOIN team ON team.id = championship.winner_team_id
-ORDER BY tournament.season_year, tournament.start_date;
+\echo '[NOT EXISTS 서브쿼리 방식]'
+SELECT team.name
+FROM team
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM championship
+    WHERE championship.winner_team_id = team.id
+)
+ORDER BY team.name;
 
--- 3. 서브쿼리의 MAX가 가장 늦은 종료일을 먼저 계산하고 해당 대회를 찾는다.
-\o :results_dir/bonus_03_latest_championship.txt
-\echo '보너스 3. 최근 우승 대회'
-SELECT tournament.name, tournament.end_date, team.name AS winner
-FROM championship
-INNER JOIN tournament ON tournament.id = championship.tournament_id
-INNER JOIN team ON team.id = championship.winner_team_id
-WHERE tournament.end_date = (SELECT MAX(end_date) FROM tournament);
+\echo '[비교 결론] LEFT JOIN은 연결 후 NULL을 찾고, NOT EXISTS는 연결 행의 존재 여부만 검사한다.'
 
--- 4. 팀별 우승 횟수를 내림차순 정렬하고 LIMIT으로 상위 3개 팀만 남긴다.
-\o :results_dir/bonus_04_top_three_championships.txt
-\echo '보너스 4. 우승 횟수 TOP 3'
+-- ============================================================================
+-- PART 2. FK 오류를 발생시켜 데이터 정합성 확인하기
+-- ============================================================================
+-- player_team_history.player_id는 player.id를 참조하는 FK다.
+-- 존재하지 않는 player_id 999999를 입력하면 부모 선수 행이 없으므로 PostgreSQL이 거부해야 한다.
+-- 이 오류 덕분에 소속 이력이 실제로 존재하는 선수만 참조한다는 데이터 정합성이 유지된다.
+--
+-- 올바른 해결 방법:
+-- 1. 이미 player에 존재하는 선수의 id를 사용한다.
+-- 2. 새 선수라면 player에 부모 행을 먼저 INSERT한 후 그 id로 소속 이력을 INSERT한다.
+-- FK를 삭제하거나 검사를 끄는 것은 관계를 깨뜨리므로 해결 방법으로 사용하지 않는다.
+--
+-- 아래 오류는 의도한 결과이므로 이 구간에서만 ON_ERROR_STOP을 끈다.
+-- 실제 오류 메시지는 run_all.sh가 results/bonus_02_fk_error.txt에 저장한다.
+\set ON_ERROR_STOP off
+INSERT INTO player_team_history (player_id, team_id, joined_date, left_date)
+SELECT 999999, team.id, DATE '2026-07-20', NULL
+FROM team
+WHERE team.name = 'T1';
+\set ON_ERROR_STOP on
+
+-- FK가 정상 작동했다면 위 행은 저장되지 않아 COUNT 결과가 0이어야 한다.
+\o :results_dir/bonus_02_fk_verification.txt
+\echo '공식 보너스 2. FK 오류 후 잘못된 행이 저장되지 않았는지 확인'
+SELECT COUNT(*) AS invalid_history_count
+FROM player_team_history
+WHERE player_id = 999999;
+
+\echo '[해결 방법] 존재하는 player.id를 사용하거나, 부모 player 행을 먼저 INSERT해야 한다.'
+
+-- ============================================================================
+-- PART 3. LCK 데이터베이스 핵심 지표 3개 미니 리포트
+-- ============================================================================
+-- 지표 1: 팀별 LCK 우승 횟수 TOP 3
+-- championship을 팀별로 묶어 대상 기간에 가장 많이 우승한 팀을 찾는다.
+--
+-- 지표 2: 선수별 LCK 우승 횟수 TOP 5
+-- 이 DB는 우승 당시 별도 로스터 테이블을 만들지 않았으므로 소속 기간으로 계산한다.
+-- 대회 종료일에 선수가 우승팀에 소속되어 있었다면 해당 대회의 우승 선수로 간주한다.
+-- joined_date는 대회 종료일 이전이고, left_date는 NULL이거나 종료일 이후여야 한다.
+--
+-- 지표 3: 2020년 이후 두 개 이상의 대상 팀에 소속된 선수
+-- 같은 팀 재합류는 한 팀으로 세고, 서로 다른 team_id가 2개 이상인 선수만 찾는다.
+\o :results_dir/bonus_03_mini_report.txt
+\echo '공식 보너스 3. LCK 데이터베이스 핵심 지표 3개'
+
+\echo '[지표 1] 팀별 LCK 우승 횟수 TOP 3'
 SELECT team.name, COUNT(championship.id) AS championship_count
 FROM team
 LEFT JOIN championship ON championship.winner_team_id = team.id
@@ -40,60 +93,35 @@ GROUP BY team.id, team.name
 ORDER BY championship_count DESC, team.name
 LIMIT 3;
 
--- 5. 현재 이력만 팀별로 묶은 뒤 가장 큰 COUNT와 같은 팀을 찾는다.
--- 서브쿼리를 사용하므로 공동 최다 팀도 모두 표시한다.
-\o :results_dir/bonus_05_largest_current_roster.txt
-\echo '보너스 5. 현재 소속 선수가 가장 많은 팀'
-WITH current_counts AS (
-    SELECT team.name, COUNT(player_team_history.id) AS player_count
-    FROM team
-    LEFT JOIN player_team_history
-        ON player_team_history.team_id = team.id
-       AND player_team_history.left_date IS NULL
-    GROUP BY team.id, team.name
-)
-SELECT name, player_count
-FROM current_counts
-WHERE player_count = (SELECT MAX(player_count) FROM current_counts)
-ORDER BY name;
+\echo '[지표 2] 선수별 LCK 우승 횟수 TOP 5'
+SELECT player.summoner_name,
+       player.real_name,
+       COUNT(DISTINCT championship.id) AS championship_count
+FROM player
+INNER JOIN player_team_history
+    ON player_team_history.player_id = player.id
+INNER JOIN championship
+    ON championship.winner_team_id = player_team_history.team_id
+INNER JOIN tournament
+    ON tournament.id = championship.tournament_id
+   AND player_team_history.joined_date <= tournament.end_date
+   AND (player_team_history.left_date IS NULL
+        OR player_team_history.left_date >= tournament.end_date)
+GROUP BY player.id, player.summoner_name, player.real_name
+ORDER BY championship_count DESC, player.summoner_name
+LIMIT 5;
 
--- 6. 선수별 서로 다른 대상 팀 수를 세고 HAVING으로 2개 이상인 선수만 남긴다.
--- 기간이 2020년 이후와 한 번이라도 겹치도록 종료일과 입단일 조건을 함께 사용한다.
-\o :results_dir/bonus_06_players_on_multiple_teams.txt
-\echo '보너스 6. 2020년 이후 두 개 이상의 대상 팀에 소속된 선수'
-SELECT player.summoner_name, COUNT(DISTINCT player_team_history.team_id) AS team_count
+\echo '[지표 3] 2020년 이후 두 개 이상의 대상 팀에 소속된 선수'
+SELECT player.summoner_name,
+       player.real_name,
+       COUNT(DISTINCT player_team_history.team_id) AS team_count
 FROM player
 INNER JOIN player_team_history ON player_team_history.player_id = player.id
-WHERE player_team_history.joined_date <= DATE '2026-07-19'
-  AND (player_team_history.left_date IS NULL OR player_team_history.left_date >= DATE '2020-01-01')
-GROUP BY player.id, player.summoner_name
+WHERE player_team_history.joined_date <= DATE '2026-07-20'
+  AND (player_team_history.left_date IS NULL
+       OR player_team_history.left_date >= DATE '2020-01-01')
+GROUP BY player.id, player.summoner_name, player.real_name
 HAVING COUNT(DISTINCT player_team_history.team_id) >= 2
 ORDER BY team_count DESC, player.summoner_name;
-
--- 7. 같은 선수가 재합류해 이력 행이 여러 개여도 한 명으로 세도록 COUNT DISTINCT를 사용한다.
-\o :results_dir/bonus_07_historical_player_count_by_team.txt
-\echo '보너스 7. 팀별 역대 소속 선수 수'
-SELECT team.name, COUNT(DISTINCT player_team_history.player_id) AS historical_player_count
-FROM team
-LEFT JOIN player_team_history ON player_team_history.team_id = team.id
-GROUP BY team.id, team.name
-ORDER BY historical_player_count DESC, team.name;
-
--- 8. generate_series가 2020~2026 연도 목록을 먼저 만들고, 그해와 기간이 겹친 선수를 센다.
--- LEFT JOIN을 사용하므로 등록 선수가 없는 연도도 0명으로 표시할 수 있다.
-\o :results_dir/bonus_08_registered_players_by_year.txt
-\echo '보너스 8. 연도별 등록 선수 수'
-WITH years AS (
-    SELECT generate_series(2020, 2026) AS season_year
-)
-SELECT years.season_year,
-       COUNT(DISTINCT player_team_history.player_id) AS registered_player_count
-FROM years
-LEFT JOIN player_team_history
-    ON player_team_history.joined_date <= make_date(years.season_year, 12, 31)
-   AND (player_team_history.left_date IS NULL
-        OR player_team_history.left_date >= make_date(years.season_year, 1, 1))
-GROUP BY years.season_year
-ORDER BY years.season_year;
 
 \o
