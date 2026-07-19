@@ -1,0 +1,5 @@
+      name       |       winner        
+-----------------+---------------------
+ 2024 LCK Summer | Hanwha Life Esports
+(1 row)
+

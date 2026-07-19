@@ -1,0 +1,9 @@
+ position | summoner_name |    real_name    | joined_date 
+----------+---------------+-----------------+-------------
+ ADC      | Peyz          | Kim Su-hwan     | 2025-11-19
+ JUNGLE   | Oner          | Mun Hyeon-jun   | 2020-12-02
+ MID      | Faker         | Lee Sang-hyeok  | 2013-02-13
+ SUPPORT  | Keria         | Ryu Min-seok    | 2020-11-18
+ TOP      | Doran         | Choi Hyeon-joon | 2024-11-19
+(5 rows)
+

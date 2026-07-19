@@ -1,0 +1,14 @@
+        name         | championship_count 
+---------------------+--------------------
+ Gen.G               |                  6
+ Dplus KIA           |                  3
+ Hanwha Life Esports |                  2
+ T1                  |                  2
+ BNK FearX           |                  0
+ DN SOOPers          |                  0
+ Hanjin BRION        |                  0
+ KT Rolster          |                  0
+ Kiwoom DRX          |                  0
+ Nongshim RedForce   |                  0
+(10 rows)
+

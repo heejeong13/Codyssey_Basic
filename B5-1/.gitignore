@@ -1,0 +1,11 @@
+# make install이 만드는 프로젝트별 접속 환경 파일
+.pg_env
+
+# PostgreSQL의 실제 데이터 파일과 서버 로그가 저장되는 폴더
+.postgres_data/
+
+# Postgres.app 설치 파일을 임시로 보관하는 폴더
+.downloads/
+
+# macOS Finder가 자동 생성하는 파일
+.DS_Store

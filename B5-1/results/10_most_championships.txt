@@ -1,0 +1,5 @@
+ name  | championship_count 
+-------+--------------------
+ Gen.G |                  6
+(1 row)
+

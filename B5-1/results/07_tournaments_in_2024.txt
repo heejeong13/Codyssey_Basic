@@ -1,0 +1,6 @@
+      name       | split  | start_date |  end_date  
+-----------------+--------+------------+------------
+ 2024 LCK Spring | SPRING | 2024-01-17 | 2024-04-14
+ 2024 LCK Summer | SUMMER | 2024-06-12 | 2024-09-08
+(2 rows)
+

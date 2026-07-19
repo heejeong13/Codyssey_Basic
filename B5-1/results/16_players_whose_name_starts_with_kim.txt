@@ -1,0 +1,14 @@
+ summoner_name |   real_name    | position 
+---------------+----------------+----------
+ Canna         | Kim Chang-dong | TOP
+ Khan          | Kim Dong-ha    | TOP
+ Canyon        | Kim Geon-bu    | JUNGLE
+ Zeka          | Kim Geon-woo   | MID
+ Malrang       | Kim Geun-seong | JUNGLE
+ bonO          | Kim Gi-beom    | JUNGLE
+ Kiin          | Kim Gi-in      | TOP
+ Aiming        | Kim Ha-ram     | ADC
+ Karis         | Kim Hong-jo    | MID
+ Kellin        | Kim Hyeong-gyu | SUPPORT
+(10 rows)
+

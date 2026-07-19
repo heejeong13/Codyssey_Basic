@@ -1,0 +1,17 @@
+      name       |       winner        
+-----------------+---------------------
+ 2020 LCK Spring | T1
+ 2020 LCK Summer | Dplus KIA
+ 2021 LCK Spring | Dplus KIA
+ 2021 LCK Summer | Dplus KIA
+ 2022 LCK Spring | T1
+ 2022 LCK Summer | Gen.G
+ 2023 LCK Spring | Gen.G
+ 2023 LCK Summer | Gen.G
+ 2024 LCK Spring | Gen.G
+ 2024 LCK Summer | Hanwha Life Esports
+ 2025 LCK Cup    | Hanwha Life Esports
+ 2025 LCK Season | Gen.G
+ 2026 LCK Cup    | Gen.G
+(13 rows)
+

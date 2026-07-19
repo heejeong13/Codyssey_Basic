@@ -1,0 +1,9 @@
+ position | player_count 
+----------+--------------
+ JUNGLE   |           21
+ TOP      |           21
+ SUPPORT  |           19
+ ADC      |           18
+ MID      |           16
+(5 rows)
+

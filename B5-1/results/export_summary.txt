@@ -1,0 +1,43 @@
+LCK PostgreSQL 환경 요약
+
+[PostgreSQL 버전]
+                                                               version                                                               
+-------------------------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 16.14 (Postgres.app) on aarch64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.102), 64-bit
+(1 row)
+
+
+[생성된 테이블]
+                List of relations
+ Schema |        Name         | Type  |  Owner   
+--------+---------------------+-------+----------
+ public | championship        | table | heejeong
+ public | player              | table | heejeong
+ public | player_team_history | table | heejeong
+ public | team                | table | heejeong
+ public | tournament          | table | heejeong
+(5 rows)
+
+
+[생성된 인덱스]
+      tablename      |           indexname            |                                                         indexdef                                                          
+---------------------+--------------------------------+---------------------------------------------------------------------------------------------------------------------------
+ championship        | championship_pkey              | CREATE UNIQUE INDEX championship_pkey ON public.championship USING btree (id)
+ championship        | championship_tournament_id_key | CREATE UNIQUE INDEX championship_tournament_id_key ON public.championship USING btree (tournament_id)
+ championship        | idx_championship_winner        | CREATE INDEX idx_championship_winner ON public.championship USING btree (winner_team_id)
+ player              | idx_player_position            | CREATE INDEX idx_player_position ON public.player USING btree ("position")
+ player              | player_pkey                    | CREATE UNIQUE INDEX player_pkey ON public.player USING btree (id)
+ player              | player_summoner_name_key       | CREATE UNIQUE INDEX player_summoner_name_key ON public.player USING btree (summoner_name)
+ player_team_history | history_period_unique          | CREATE UNIQUE INDEX history_period_unique ON public.player_team_history USING btree (player_id, team_id, joined_date)
+ player_team_history | idx_history_current            | CREATE INDEX idx_history_current ON public.player_team_history USING btree (team_id, player_id) WHERE (left_date IS NULL)
+ player_team_history | idx_history_player_joined      | CREATE INDEX idx_history_player_joined ON public.player_team_history USING btree (player_id, joined_date)
+ player_team_history | idx_history_team               | CREATE INDEX idx_history_team ON public.player_team_history USING btree (team_id)
+ player_team_history | player_team_history_pkey       | CREATE UNIQUE INDEX player_team_history_pkey ON public.player_team_history USING btree (id)
+ team                | team_name_key                  | CREATE UNIQUE INDEX team_name_key ON public.team USING btree (name)
+ team                | team_pkey                      | CREATE UNIQUE INDEX team_pkey ON public.team USING btree (id)
+ team                | team_short_name_key            | CREATE UNIQUE INDEX team_short_name_key ON public.team USING btree (short_name)
+ tournament          | idx_tournament_split           | CREATE INDEX idx_tournament_split ON public.tournament USING btree (split)
+ tournament          | tournament_pkey                | CREATE UNIQUE INDEX tournament_pkey ON public.tournament USING btree (id)
+ tournament          | tournament_year_split_unique   | CREATE UNIQUE INDEX tournament_year_split_unique ON public.tournament USING btree (season_year, split)
+(17 rows)
+

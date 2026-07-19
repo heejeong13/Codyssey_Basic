@@ -1,0 +1,14 @@
+        name         | historical_player_count 
+---------------------+-------------------------
+ Hanwha Life Esports |                      33
+ KT Rolster          |                      33
+ Dplus KIA           |                      26
+ Gen.G               |                      19
+ T1                  |                      16
+ BNK FearX           |                       0
+ DN SOOPers          |                       0
+ Hanjin BRION        |                       0
+ Kiwoom DRX          |                       0
+ Nongshim RedForce   |                       0
+(10 rows)
+

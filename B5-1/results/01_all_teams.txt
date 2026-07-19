@@ -1,0 +1,14 @@
+ id |        name         | short_name | status 
+----+---------------------+------------+--------
+  6 | BNK FearX           | BFX        | ACTIVE
+  7 | DN SOOPers          | DNS        | ACTIVE
+  3 | Dplus KIA           | DK         | ACTIVE
+  2 | Gen.G               | GEN        | ACTIVE
+ 10 | Hanjin BRION        | BRO        | ACTIVE
+  4 | Hanwha Life Esports | HLE        | ACTIVE
+  5 | KT Rolster          | KT         | ACTIVE
+  8 | Kiwoom DRX          | KRX        | ACTIVE
+  9 | Nongshim RedForce   | NS         | ACTIVE
+  1 | T1                  | T1         | ACTIVE
+(10 rows)
+

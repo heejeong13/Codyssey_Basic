@@ -1,0 +1,22 @@
+ summoner_name |    real_name     | position 
+---------------+------------------+----------
+ 5kid          | Park Jeong-hyeon | ADC
+ Aiming        | Kim Ha-ram       | ADC
+ Cheoni        | Jo Seung-mo      | ADC
+ Deft          | Kim Hyuk-kyu     | ADC
+ Ghost         | Jang Yong-jun    | ADC
+ Gumayusi      | Lee Min-hyeong   | ADC
+ HyBriD        | Lee Woo-jin      | ADC
+ Noah          | Oh Hyeon-taek    | ADC
+ Nuclear       | Shin Jeong-hyeon | ADC
+ Peyz          | Kim Su-hwan      | ADC
+ Rahel         | Cho Min-seong    | ADC
+ Ruler         | Park Jae-hyuk    | ADC
+ SamD          | Lee Jae-hoon     | ADC
+ Smash         | Shin Geum-jae    | ADC
+ Teddy         | Park Jin-seong   | ADC
+ Viper         | Park Do-hyeon    | ADC
+ Zenit         | Jeon Tae-gwon    | ADC
+ deokdam       | Seo Dae-gil      | ADC
+(18 rows)
+

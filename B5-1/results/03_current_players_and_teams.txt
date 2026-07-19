@@ -1,0 +1,29 @@
+ summoner_name |    real_name    | position |      team_name      
+---------------+-----------------+----------+---------------------
+ Smash         | Shin Geum-jae   | ADC      | Dplus KIA
+ Lucid         | Choi Yong-hyeok | JUNGLE   | Dplus KIA
+ ShowMaker     | Heo Su          | MID      | Dplus KIA
+ Career        | Oh Hyeong-seok  | SUPPORT  | Dplus KIA
+ Siwoo         | Jeon Si-woo     | TOP      | Dplus KIA
+ Ruler         | Park Jae-hyuk   | ADC      | Gen.G
+ Canyon        | Kim Geon-bu     | JUNGLE   | Gen.G
+ Chovy         | Jeong Ji-hoon   | MID      | Gen.G
+ Duro          | Joo Min-kyu     | SUPPORT  | Gen.G
+ Kiin          | Kim Gi-in       | TOP      | Gen.G
+ Gumayusi      | Lee Min-hyeong  | ADC      | Hanwha Life Esports
+ Kanavi        | Seo Jin-hyeok   | JUNGLE   | Hanwha Life Esports
+ Zeka          | Kim Geon-woo    | MID      | Hanwha Life Esports
+ Delight       | Yoo Hwan-joong  | SUPPORT  | Hanwha Life Esports
+ Zeus          | Choi Woo-je     | TOP      | Hanwha Life Esports
+ Aiming        | Kim Ha-ram      | ADC      | KT Rolster
+ Cuzz          | Moon Woo-chan   | JUNGLE   | KT Rolster
+ Bdd           | Gwak Bo-seong   | MID      | KT Rolster
+ Pollu         | Oh Dong-gyu     | SUPPORT  | KT Rolster
+ PerfecT       | Lee Seung-min   | TOP      | KT Rolster
+ Peyz          | Kim Su-hwan     | ADC      | T1
+ Oner          | Mun Hyeon-jun   | JUNGLE   | T1
+ Faker         | Lee Sang-hyeok  | MID      | T1
+ Keria         | Ryu Min-seok    | SUPPORT  | T1
+ Doran         | Choi Hyeon-joon | TOP      | T1
+(25 rows)
+
