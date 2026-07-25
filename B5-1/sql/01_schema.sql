@@ -29,7 +29,7 @@ CREATE TABLE player (
 -- 아직 종료되지 않은 대회는 이 프로젝트에 넣지 않으므로 end_date도 필수다.
 CREATE TABLE tournament (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name varchar(100) NOT NULL,
+    name varchar(100) NOT NULL UNIQUE,
     season_year integer NOT NULL,
     split varchar(10) NOT NULL,
     start_date date NOT NULL,
