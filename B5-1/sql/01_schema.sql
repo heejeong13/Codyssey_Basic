@@ -8,7 +8,6 @@ CREATE TABLE team (
     id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name varchar(100) NOT NULL UNIQUE,
     short_name varchar(10) NOT NULL UNIQUE,
-    founded_date date,
     status varchar(10) NOT NULL,
     -- 현재 과제에서는 모두 ACTIVE지만 허용되지 않은 오타가 들어가지 않도록 제한한다.
     CONSTRAINT team_status_check CHECK (status IN ('ACTIVE', 'INACTIVE'))

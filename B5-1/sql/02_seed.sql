@@ -3,19 +3,17 @@
 -- player에는 검색 가능한 소환사명과 실제 이름, 대표 포지션만 저장한다.
 
 -- 먼저 선수 이력을 관리하는 기존 5개 팀을 입력하고, 이어 나머지 LCK 팀을 입력한다.
-INSERT INTO team (name, short_name, founded_date, status) VALUES
-    ('T1', 'T1', NULL, 'ACTIVE'),
-    ('Gen.G', 'GEN', NULL, 'ACTIVE'),
-    ('Dplus KIA', 'DK', NULL, 'ACTIVE'),
-    ('Hanwha Life Esports', 'HLE', NULL, 'ACTIVE'),
-    ('KT Rolster', 'KT', NULL, 'ACTIVE'),
-    -- 아래 5개 팀은 2026년 공식 LCK 표기와 약어를 사용한다.
-    -- 과제 범위에서는 팀 기본정보만 관리하고 선수 소속 이력은 추가하지 않는다.
-    ('BNK FearX', 'BFX', NULL, 'ACTIVE'),
-    ('DN SOOPers', 'DNS', NULL, 'ACTIVE'),
-    ('Kiwoom DRX', 'KRX', NULL, 'ACTIVE'),
-    ('Nongshim RedForce', 'NS', NULL, 'ACTIVE'),
-    ('Hanjin BRION', 'BRO', NULL, 'ACTIVE');
+INSERT INTO team (name, short_name, status) VALUES
+    ('T1', 'T1', 'ACTIVE'),
+    ('Gen.G', 'GEN', 'ACTIVE'),
+    ('Dplus KIA', 'DK', 'ACTIVE'),
+    ('Hanwha Life Esports', 'HLE', 'ACTIVE'),
+    ('KT Rolster', 'KT', 'ACTIVE'),
+    ('BNK FearX', 'BFX', 'ACTIVE'),
+    ('DN SOOPers', 'DNS', 'ACTIVE'),
+    ('Kiwoom DRX', 'KRX', 'ACTIVE'),
+    ('Nongshim RedForce', 'NS', 'ACTIVE'),
+    ('Hanjin BRION', 'BRO', 'ACTIVE');
 
 -- 선수는 대상 팀 사이에서 이적했더라도 한 번만 입력한다.
 -- real_name은 공식 로스터에서 사용하는 로마자 표기로 통일한다.
