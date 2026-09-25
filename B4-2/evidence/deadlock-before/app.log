@@ -1,0 +1,42 @@
+2026-09-25T16:31:40.628742875Z >>> Starting Agent Boot Sequence...
+2026-09-25T16:31:40.628757709Z [1/6] Checking User Account               [OK]
+2026-09-25T16:31:40.628759125Z    ... Running as service user 'agent-admin' (uid=1001)
+2026-09-25T16:31:40.628760000Z [2/6] Verifying Environment Variables     [OK]
+2026-09-25T16:31:40.628760959Z    ... All required Envs correct
+2026-09-25T16:31:40.628761750Z [3/6] Checking Required Files             [OK]
+2026-09-25T16:31:40.628762542Z    ... Verified 'secret.key' with correct key string.
+2026-09-25T16:31:40.628763334Z [4/6] Checking Port Availability          [OK]
+2026-09-25T16:31:40.628764167Z    ... Port 15034 is available.
+2026-09-25T16:31:40.628764917Z [5/6] Verifying Log Permission            [OK]
+2026-09-25T16:31:40.628765709Z    ... Log directory is writable: /home/agent-admin/agent-app/logs
+2026-09-25T16:31:40.628766625Z [6/6] Verifying Mission Environment       [OK]
+2026-09-25T16:31:40.628767375Z    ... MEMORY_LIMIT=512MB, CPU_MAX_OCCUPY=10%, MULTI_THREAD_ENABLE=True
+2026-09-25T16:31:40.628768209Z ------------------------------------------------------------
+2026-09-25T16:31:40.628769042Z All Boot Checks Passed!
+2026-09-25T16:31:40.628769792Z Agent READY
+2026-09-25T16:31:40.628770792Z 2026-09-25 16:31:40,628 [INFO] [SafetyGuard] Process priority lowered (nice=10).
+2026-09-25T16:31:40.628771709Z 2026-09-25 16:31:40,628 [INFO] Agent listening at port 15034
+2026-09-25T16:31:42.642203251Z 
+2026-09-25T16:31:42.642231501Z ==================================================
+2026-09-25T16:31:42.642234251Z  [ Agent Initiate ] Resource Check 
+2026-09-25T16:31:42.642236460Z ==================================================
+2026-09-25T16:31:42.642268585Z  [ MEMORY ] Limit: 512MB 		[ OK ]
+2026-09-25T16:31:42.642270918Z  [ CPU    ] Limit: 10%  		[ OK ]
+2026-09-25T16:31:42.642273210Z  [ THREAD ] Concurrency: True 		[ WARNING ]
+2026-09-25T16:31:42.642275210Z --------------------------------------------------
+2026-09-25T16:31:42.642277001Z  >>> SYSTEM WARNING: POTENTIAL DEADLOCK IN CONCURRENT MODE.
+2026-09-25T16:31:42.642279043Z ==================================================
+2026-09-25T16:31:42.642280793Z 
+2026-09-25T16:31:42.642282460Z 2026-09-25 16:31:42,641 [WARNING] [AgentWorker] Initializing concurrent transaction processors...
+2026-09-25T16:31:42.642284376Z 2026-09-25 16:31:42,641 [WARNING] [System] CAUTION: Strict resource locking is enabled.
+2026-09-25T16:31:47.669679045Z 2026-09-25 16:31:47,669 [INFO] [Worker-Thread-1] Process Started. Attempting to lock [Shared_Memory_A]...
+2026-09-25T16:31:47.669907045Z 2026-09-25 16:31:47,669 [INFO] [AgentWorker][Worker-Thread-2] Process Started. Attempting to lock [Socket_Pool_B]...
+2026-09-25T16:31:47.670153837Z 2026-09-25 16:31:47,669 [INFO] [AgentWorker][Worker-Thread-1] LOCK ACQUIRED: [Shared_Memory_A]. (Holding...)
+2026-09-25T16:31:47.670302087Z 2026-09-25 16:31:47,669 [INFO] [AgentWorker][Worker-Thread-2] LOCK ACQUIRED: [Socket_Pool_B]. (Holding...)
+2026-09-25T16:31:47.670698879Z 2026-09-25 16:31:47,669 [INFO] [AgentWorker] Waiting for worker threads to complete transactions...
+2026-09-25T16:31:47.670791920Z 2026-09-25 16:31:47,670 [INFO] [AgentWorker][Worker-Thread-1] Processing critical data in Memory A...
+2026-09-25T16:31:47.670936504Z 2026-09-25 16:31:47,670 [INFO] [AgentWorker][Worker-Thread-2] Establishing network connections in Pool B...
+2026-09-25T16:31:49.687019963Z 2026-09-25 16:31:49,686 [INFO] [AgentWorker][Worker-Thread-1] Need resource [Socket_Pool_B] to finish job.
+2026-09-25T16:31:49.687053546Z 2026-09-25 16:31:49,686 [INFO] [AgentWorker][Worker-Thread-2] Need resource [Shared_Memory_A] to write logs.
+2026-09-25T16:31:49.687200046Z 2026-09-25 16:31:49,686 [INFO] [AgentWorker][Worker-Thread-1] WAITING for [Socket_Pool_B]... (Status: BLOCKED)
+2026-09-25T16:31:49.687208588Z 2026-09-25 16:31:49,686 [INFO] [AgentWorker][Worker-Thread-2] WAITING for [Shared_Memory_A]... (Status: BLOCKED)

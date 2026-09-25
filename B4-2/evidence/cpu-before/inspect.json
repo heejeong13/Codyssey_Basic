@@ -1,0 +1,204 @@
+[
+    {
+        "Id": "fde2765e9d532ca6f74d7d067945457d4120c598353972e6b399ac3afa90c0f6",
+        "Created": "2026-09-25T16:30:37.619198055Z",
+        "Path": "./agent-leak-app-arm64",
+        "Args": [],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 1,
+            "Error": "",
+            "StartedAt": "2026-09-25T16:30:37.678889638Z",
+            "FinishedAt": "2026-09-25T16:31:11.313678209Z"
+        },
+        "Image": "sha256:407e26cbd7d4c73d99ccf0a6bd65e782eee6761ae38712d02b11e84b72a95248",
+        "ResolvConfPath": "/var/lib/docker/containers/fde2765e9d532ca6f74d7d067945457d4120c598353972e6b399ac3afa90c0f6/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/fde2765e9d532ca6f74d7d067945457d4120c598353972e6b399ac3afa90c0f6/hostname",
+        "HostsPath": "/var/lib/docker/containers/fde2765e9d532ca6f74d7d067945457d4120c598353972e6b399ac3afa90c0f6/hosts",
+        "LogPath": "/var/lib/docker/containers/fde2765e9d532ca6f74d7d067945457d4120c598353972e6b399ac3afa90c0f6/fde2765e9d532ca6f74d7d067945457d4120c598353972e6b399ac3afa90c0f6-json.log",
+        "Name": "/agent-cpu-before",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "bridge",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "fde2765e9d53",
+            "Domainname": "",
+            "User": "agent-admin",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "15034/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "MEMORY_LIMIT=512",
+                "CPU_MAX_OCCUPY=100",
+                "MULTI_THREAD_ENABLE=false",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "AGENT_HOME=/home/agent-admin/agent-app",
+                "AGENT_PORT=15034",
+                "AGENT_UPLOAD_DIR=/home/agent-admin/agent-app/upload_files",
+                "AGENT_KEY_PATH=/home/agent-admin/agent-app/api_keys",
+                "AGENT_LOG_DIR=/home/agent-admin/agent-app/logs"
+            ],
+            "Cmd": [
+                "./agent-leak-app-arm64"
+            ],
+            "Image": "agent-leak-lab:arm64",
+            "Volumes": null,
+            "WorkingDir": "/home/agent-admin/agent-app",
+            "Entrypoint": null,
+            "Labels": {
+                "org.opencontainers.image.version": "24.04"
+            },
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "0e7e381c38a39878307c0c131e0152ffcd7ef6140e4b84c3b0a05644d15c36f7",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:0f5a5c938530ff9fcf9625f54a2349e165b336fc622165cb15cb3f68df531b81",
+            "size": 1620,
+            "platform": {
+                "architecture": "arm64",
+                "os": "linux"
+            }
+        }
+    }
+]
